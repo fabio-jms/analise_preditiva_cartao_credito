@@ -1,0 +1,5 @@
+# Arquivos de Dados Pessoais (O Git vai ignorar completamente estes arquivos)
+dados_historicos.csv
+gastos_limpos.csv
+*.xlsx
+*.csv
