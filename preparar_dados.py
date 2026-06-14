@@ -27,9 +27,22 @@ df_diario = df.groupby('Data')['Valor Gasto'].sum().reset_index()
 # 5. Renomear para o padrão do Prophet
 df_diario.columns = ['ds', 'y']
 
+# 6. Agrupar os gastos por MÊS (Excelente para previsão de fatura)
+# Se preferir prever por DIA, mude 'MS' para 'D' abaixo
+print("📊 Agrupando gastos por mês...")
+df_mensal = df.groupby(pd.Grouper(key='Data', freq='MS'))['Valor Gasto'].sum().reset_index()
+
+# 7. Renomear para o padrão exigido pelo Prophet (ds e y)
+df_mensal.columns = ['ds', 'y']
+
 # Salvar o resultado diário
-df_diario.to_csv("gastos_limpos.csv", index=False)
+df_diario.to_csv("gastos_limpos_diario.csv", index=False)
+df_mensal.to_csv("gastos_limpos_mensal.csv", index=False)
+print("✅ Sucesso! O arquivo 'gastos_limpos.csv' foi gerado e está pronto para a previsão.")
 
 # Mostrar uma prévia de como ficou
-print("\nPrévia dos seus gastos mensais acumulados:")
+print("\nPrévia dos seus gastos diarios acumulados:")
 print(df_diario.tail(10))
+
+print("\nPrévia dos seus gastos mensais acumulados:")
+print(df_mensal.tail(10))
